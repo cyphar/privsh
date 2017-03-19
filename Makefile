@@ -23,3 +23,6 @@ privsh: $(wildcard *.go)
 
 install: privsh
 	install -m4755 -D privsh $(PREFIX)/bin/privsh
+
+uninstall:
+	rm -f $(PREFIX)/bin/privsh

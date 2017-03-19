@@ -1,4 +1,6 @@
 ## `privsh` ##
+[![Release](https://img.shields.io/github/release/cyphar/privsh.svg)](CHANGELOG.md)
+[![License](https://img.shields.io/github/license/cyphar/privsh.svg)](COPYING)
 
 A fairly dodgy interpreter which will allow you to run setuid shell scripts.
 Due to various race conditions, setuid shell scripts don't actually run as

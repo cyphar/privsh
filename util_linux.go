@@ -48,7 +48,3 @@ func setegid(gid int) error {
 func seteuid(uid int) error {
 	return syscall.Setresuid(uid, uid, uid)
 }
-
-func setgroups(groups []int) error {
-	return syscall.Setgroups(groups)
-}

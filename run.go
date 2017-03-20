@@ -61,11 +61,6 @@ func run(path string) error {
 		return err
 	}
 
-	// First, drop groups.
-	if err := setgroups(nil); err != nil {
-		return err
-	}
-
 	// Always set group before user.
 	if setgid {
 		if err := setegid(gid); err != nil {

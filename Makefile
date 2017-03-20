@@ -17,9 +17,25 @@
 GO ?= go
 PROJECT := github.com/cyphar/privsh
 PREFIX ?= /usr
+LDFLAGS ?=
+
+# Version information.
+VERSION := $(shell cat ./VERSION)
+COMMIT_NO := $(shell git rev-parse HEAD 2> /dev/null || true)
+COMMIT := $(if $(shell git status --porcelain --untracked-files=no),"${COMMIT_NO}-dirty","${COMMIT_NO}")
+LDFLAGS += -s -w -X main.gitCommit=${COMMIT} -X main.version=${VERSION}
+
+# Conditional static compilation.
+ifeq ($(STATIC),1)
+LDFLAGS += -extldflags '-static'
+GO := CGO_ENABLED=0 $(GO)
+endif
 
 privsh: $(wildcard *.go)
-	$(GO) build -o $@ $(PROJECT)
+	$(GO) build -ldflags "$(LDFLAGS)" -o $@ $(PROJECT)
+
+clean:
+	rm -f privsh
 
 install: privsh
 	install -m4755 -D privsh $(PREFIX)/bin/privsh

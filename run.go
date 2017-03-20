@@ -23,14 +23,7 @@ import (
 	"os"
 )
 
-var silent = false
-
-func cmd(args []string) error {
-	if len(args) != 2 {
-		return fmt.Errorf("usage: privsh [script]")
-	}
-	path := args[1]
-
+func run(path string) error {
 	fi, err := os.Stat(path)
 	if err != nil {
 		return err
@@ -101,13 +94,4 @@ func cmd(args []string) error {
 
 	// TODO: We probably need to clean up os.Environ.
 	return execve(script.Comm, []string{script.Comm}, os.Environ())
-}
-
-func main() {
-	if err := cmd(os.Args); err != nil {
-		if !silent {
-			fmt.Fprintf(os.Stderr, "privsh: %v\n", err)
-		}
-		os.Exit(1)
-	}
 }
